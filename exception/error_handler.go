@@ -1,6 +1,7 @@
 package exception
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"reflect"
@@ -15,7 +16,9 @@ func ErrorHandler(err error, ctx *gin.Context, requestType interface{}) {
 		return
 	}
 
-	if validationErrors(err, ctx, requestType) {
+	var e *ValidationError
+	if errors.As(err, &e) {
+		validationErrors(e.err, ctx, e.requestType)
 		return
 	}
 
