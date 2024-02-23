@@ -1,0 +1,298 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "A Boilerplate API in Go using Gin framework",
+        "title": "Boilerplate API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8888",
+    "basePath": "/api",
+    "paths": {
+        "/pjp": {
+            "get": {
+                "description": "Return list of pjp.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "pjp"
+                ],
+                "summary": "Get All pjp.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Pjp Code",
+                        "name": "pjp_code",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Pagination"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Save pjp data in Db.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "pjp"
+                ],
+                "summary": "Create pjp",
+                "parameters": [
+                    {
+                        "description": "Create pjp",
+                        "name": "pjp",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CreatePjpRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/pjp/{pjpId}": {
+            "get": {
+                "description": "Return the pjp whoes pjpId value mathes id.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "pjp"
+                ],
+                "summary": "Get Single pjp by id.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "update pjp by id",
+                        "name": "pjpId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Remove pjp data by id.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "pjp"
+                ],
+                "summary": "Delete pjp",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "delete pjp by id",
+                        "name": "pjpId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update pjp data.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "pjp"
+                ],
+                "summary": "Update pjp",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "update pjp by id",
+                        "name": "pjpId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update pjp",
+                        "name": "pjp",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdatePjpRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "request.CreatePjpRequest": {
+            "type": "object",
+            "required": [
+                "is_active",
+                "pjp_code",
+                "sale_type",
+                "salesman_id",
+                "salesman_team",
+                "warehouse_id"
+            ],
+            "properties": {
+                "is_active": {
+                    "type": "string"
+                },
+                "pjp_code": {
+                    "type": "integer"
+                },
+                "sale_type": {
+                    "type": "string"
+                },
+                "salesman_id": {
+                    "type": "string"
+                },
+                "salesman_team": {
+                    "type": "string"
+                },
+                "warehouse_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.UpdatePjpRequest": {
+            "type": "object",
+            "required": [
+                "id",
+                "is_active",
+                "pjp_code",
+                "sale_type",
+                "salesman_id",
+                "salesman_team",
+                "warehouse_id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "is_active": {
+                    "type": "string"
+                },
+                "pjp_code": {
+                    "type": "integer",
+                    "maximum": 4
+                },
+                "sale_type": {
+                    "type": "string"
+                },
+                "salesman_id": {
+                    "type": "string"
+                },
+                "salesman_team": {
+                    "type": "string"
+                },
+                "warehouse_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.Meta": {
+            "type": "object",
+            "properties": {
+                "limit": {
+                    "type": "integer"
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "total_data": {
+                    "type": "integer"
+                },
+                "total_page": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.Pagination": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "meta": {
+                    "$ref": "#/definitions/response.Meta"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "description": "Type \"Bearer\" followed by a space and JWT token.",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

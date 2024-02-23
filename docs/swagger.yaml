@@ -1,0 +1,201 @@
+basePath: /api
+definitions:
+  request.CreatePjpRequest:
+    properties:
+      is_active:
+        type: string
+      pjp_code:
+        type: integer
+      sale_type:
+        type: string
+      salesman_id:
+        type: string
+      salesman_team:
+        type: string
+      warehouse_id:
+        type: string
+    required:
+    - is_active
+    - pjp_code
+    - sale_type
+    - salesman_id
+    - salesman_team
+    - warehouse_id
+    type: object
+  request.UpdatePjpRequest:
+    properties:
+      id:
+        type: integer
+      is_active:
+        type: string
+      pjp_code:
+        maximum: 4
+        type: integer
+      sale_type:
+        type: string
+      salesman_id:
+        type: string
+      salesman_team:
+        type: string
+      warehouse_id:
+        type: string
+    required:
+    - id
+    - is_active
+    - pjp_code
+    - sale_type
+    - salesman_id
+    - salesman_team
+    - warehouse_id
+    type: object
+  response.Meta:
+    properties:
+      limit:
+        type: integer
+      page:
+        type: integer
+      total_data:
+        type: integer
+      total_page:
+        type: integer
+    type: object
+  response.Pagination:
+    properties:
+      code:
+        type: integer
+      data: {}
+      meta:
+        $ref: '#/definitions/response.Meta'
+      status:
+        type: string
+    type: object
+  response.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+host: localhost:8888
+info:
+  contact: {}
+  description: A Boilerplate API in Go using Gin framework
+  title: Boilerplate API
+  version: "1.0"
+paths:
+  /pjp:
+    get:
+      description: Return list of pjp.
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: string
+      - description: Page
+        in: query
+        name: page
+        type: string
+      - description: Pjp Code
+        in: query
+        name: pjp_code
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Pagination'
+      summary: Get All pjp.
+      tags:
+      - pjp
+    post:
+      description: Save pjp data in Db.
+      parameters:
+      - description: Create pjp
+        in: body
+        name: pjp
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreatePjpRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Create pjp
+      tags:
+      - pjp
+  /pjp/{pjpId}:
+    delete:
+      description: Remove pjp data by id.
+      parameters:
+      - description: delete pjp by id
+        in: path
+        name: pjpId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Delete pjp
+      tags:
+      - pjp
+    get:
+      description: Return the pjp whoes pjpId value mathes id.
+      parameters:
+      - description: update pjp by id
+        in: path
+        name: pjpId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Get Single pjp by id.
+      tags:
+      - pjp
+    patch:
+      description: Update pjp data.
+      parameters:
+      - description: update pjp by id
+        in: path
+        name: pjpId
+        required: true
+        type: string
+      - description: Update pjp
+        in: body
+        name: pjp
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdatePjpRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Update pjp
+      tags:
+      - pjp
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
