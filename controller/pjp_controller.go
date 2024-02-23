@@ -73,7 +73,7 @@ func (controller *PjpController) Update(ctx *gin.Context) {
 	helper.ErrorPanic(err)
 
 	if err := controller.Validate.Struct(updatePjpRequest); err != nil {
-		exception.ErrorHandler(err, ctx, updatePjpRequest)
+		exception.NewValidateError(err, updatePjpRequest)
 		return
 	}
 
